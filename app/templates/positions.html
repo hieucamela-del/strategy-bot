@@ -1,0 +1,28 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Positions</title>
+    <style>body{font-family:Arial;margin:20px}table{width:100%;border-collapse:collapse}th,td{border:1px solid #eee;padding:6px}</style>
+  </head>
+  <body>
+    <h1>Positions</h1>
+    <a href="/">Back</a>
+    <table>
+      <thead><tr><th>Symbol</th><th>Side</th><th>Entry Price</th><th>Qty</th><th>Status</th><th>Entry TS</th><th>Exit TS</th></tr></thead>
+      <tbody>
+        {% for p in positions %}
+        <tr>
+          <td>{{ p.symbol or '' }}</td>
+          <td>{{ p.side or '' }}</td>
+          <td>{{ p.entry_price or '' }}</td>
+          <td>{{ p.qty or '' }}</td>
+          <td>{{ p.status or '' }}</td>
+          <td>{{ p.entry_ts or '' }}</td>
+          <td>{{ p.exit_ts or '' }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </body>
+</html>

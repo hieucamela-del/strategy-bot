@@ -1,0 +1,20 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Config</title>
+    <style>body{font-family:Arial;margin:20px}label{display:block;margin-top:8px}</style>
+  </head>
+  <body>
+    <h1>Config</h1>
+    <a href="/">Back</a>
+    <form method="post">
+      <label>Entry Window Start <input type="text" name="entry_start" value="{{ cfg.get('ENTRY_WINDOW_START','') }}"></label>
+      <label>Entry Window End <input type="text" name="entry_end" value="{{ cfg.get('ENTRY_WINDOW_END','') }}"></label>
+      <label>Close Time <input type="text" name="close_time" value="{{ cfg.get('CLOSE_TIME','') }}"></label>
+      <label>Contracts per order <input type="number" name="contracts" value="{{ cfg.get('CONTRACTS_PER_ORDER',0) }}"></label>
+      <label>Allowed directions (comma separated) <input type="text" name="allowed" value=",".join(cfg.get('ALLOWED_DIRECTIONS',['BUY','SELL']))></label>
+      <button type="submit">Save</button>
+    </form>
+  </body>
+</html>

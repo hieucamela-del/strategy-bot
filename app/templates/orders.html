@@ -1,0 +1,27 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Orders</title>
+    <style>body{font-family:Arial;margin:20px}table{width:100%;border-collapse:collapse}th,td{border:1px solid #eee;padding:6px}</style>
+  </head>
+  <body>
+    <h1>Orders</h1>
+    <a href="/">Back</a>
+    <table>
+      <thead><tr><th>TS</th><th>Symbol</th><th>Side</th><th>Price</th><th>Qty</th><th>Status</th></tr></thead>
+      <tbody>
+        {% for o in orders %}
+        <tr>
+          <td>{{ o.ts or '' }}</td>
+          <td>{{ o.symbol or '' }}</td>
+          <td>{{ o.side or '' }}</td>
+          <td>{{ o.price or '' }}</td>
+          <td>{{ o.qty or '' }}</td>
+          <td>{{ o.status or '' }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </body>
+</html>

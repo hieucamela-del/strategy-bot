@@ -1,0 +1,29 @@
+version: "3.9"
+
+services:
+  scheduler:
+    build: .
+    container_name: strategy-bot-scheduler
+    volumes:
+      - .:/app
+    environment:
+      - APP_MODE=PAPER
+      - ALLOWED_DIRECTIONS=BUY,SELL
+      - SCORE_THRESHOLD=0.60
+      - MAX_POSITION_PCT=0.05
+      - INPUT_FINBOX=data/finbox_notifications.json
+      - INPUT_ZALO=data/zalo_script.txt
+      - ACCOUNT_FILE=data/account.json
+      - OUTPUT_DIR=outputs
+    command: ["python", "-m", "app.scheduler_app"]
+
+  web:
+    build: .
+    container_name: strategy-bot-web
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+    environment:
+      - OUTPUT_DIR=outputs
+    command: ["python", "-m", "app.webapp"]
