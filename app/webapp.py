@@ -1,7 +1,7 @@
-from flask import Flask, render_template, jsonify, request, redirect, url_for
+from flask import Flask, render_template, jsonify, request, redirect, url_for, Response
 import os, json
 from datetime import datetime
-from app.settings import OUTPUT_DIR, INPUT_FINBOX, INPUT_ZALO, ACCOUNT_FILE, ENTRY_WINDOW_START, ENTRY_WINDOW_END, CLOSE_TIME, CONTRACTS_PER_ORDER
+from app.settings import OUTPUT_DIR, INPUT_FINBOX, INPUT_ZALO, ACCOUNT_FILE, ENTRY_WINDOW_START, ENTRY_WINDOW_END, CLOSE_TIME, CONTRACTS_PER_ORDER, AUTH_ENABLED, AUTH_USER, AUTH_PASS
 from app.scheduler_app import run_pipeline_once, run_close_positions
 
 app = Flask(__name__, template_folder="templates")
@@ -22,6 +22,20 @@ def read_json(path, default=None):
     except Exception:
         pass
     return default if default is not None else []
+
+
+def _auth_failed():
+    return Response('Authentication required', 401, {'WWW-Authenticate': 'Basic realm="Login Required"'})
+
+
+@app.before_request
+def require_basic_auth():
+    # enforce basic auth for all requests when enabled
+    if not AUTH_ENABLED:
+        return None
+    auth = request.authorization
+    if not auth or not (auth.username == AUTH_USER and auth.password == AUTH_PASS):
+        return _auth_failed()
 
 
 @app.route('/')
